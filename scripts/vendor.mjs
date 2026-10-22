@@ -1,6 +1,12 @@
 import { cp, mkdir, readFile, writeFile } from 'node:fs/promises';
 const copies = [
  ['gsap/dist/gsap.min.js', 'vendor/gsap.min.js'],
+ ['gsap/dist/ScrollTrigger.min.js', 'vendor/ScrollTrigger.min.js'],
+ ['gsap/dist/ScrambleTextPlugin.min.js', 'vendor/ScrambleTextPlugin.min.js'],
+ ['@tsparticles/slim/tsparticles.slim.bundle.min.js', 'vendor/tsparticles.slim.bundle.min.js'],
+ ['@tsparticles/slim/LICENSE', 'vendor/TSPARTICLES-LICENSE.txt'],
+ ['canvas-confetti/dist/confetti.browser.js', 'vendor/confetti.browser.js'],
+ ['canvas-confetti/LICENSE', 'vendor/CANVAS-CONFETTI-LICENSE.txt'],
  ['rough-notation/lib/rough-notation.iife.js', 'vendor/rough-notation.js'],
  ['rough-notation/LICENSE', 'vendor/ROUGH-NOTATION-LICENSE.txt'],
  ['lucide-static/LICENSE', 'vendor/LUCIDE-LICENSE.txt'],
@@ -17,9 +23,9 @@ for (const name of ['code-xml', 'cpu', 'dumbbell', 'arrow-up-right', 'arrow-up',
 }
 // Inline only the selected icons so the page remains complete when opened as a file.
 let html = await readFile('index.html', 'utf8');
-html = html.replace(/<svg data-icon="([a-z-]+)"[\s\S]*?<\/svg>/g, (match, name) => `<!--icon:${name}-->`);
+html = html.replace(/(?:<!-- @license lucide-static[^>]*-->\s*)*<svg data-icon="([a-z-]+)"[\s\S]*?<\/svg>\s*/g, (match, name) => `<!--icon:${name}-->`);
 for (const name of ['code-xml', 'cpu', 'dumbbell', 'arrow-up-right', 'arrow-up', 'mountain', 'sparkles', 'graduation-cap']) {
- const svg = (await readFile(`assets/icons/${name}.svg`, 'utf8')).replace(/<svg\s/, `<svg data-icon="${name}" aria-hidden="true" `);
+ const svg = (await readFile(`assets/icons/${name}.svg`, 'utf8')).trim().replace(/<svg\s/, `<svg data-icon="${name}" aria-hidden="true" `);
  html = html.replaceAll(`<!--icon:${name}-->`, svg);
 }
 await writeFile('index.html', html);

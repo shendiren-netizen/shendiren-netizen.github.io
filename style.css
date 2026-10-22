@@ -36,3 +36,36 @@ h1{font-size:clamp(39px,4.25vw,62px);line-height:1.25;letter-spacing:-2.8px;font
 
 /* Stable containing blocks for the hand-drawn SVG annotations. */
 h1,.section-heading h2,.direction-section h2{position:relative}
+
+/* Interactive scene: every decorative layer stays behind real content. */
+[hidden]{display:none!important}
+.sr-only{position:absolute!important;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+button{font:inherit;color:inherit;cursor:pointer}button:focus-visible{outline:3px solid #287090;outline-offset:5px}button:disabled{cursor:default}
+.hero{position:relative;isolation:isolate;row-gap:40px;padding-top:91px;padding-bottom:30px}
+.hero-copy,.hero-art{z-index:2;min-width:0}.hero-copy{position:relative}
+.particle-field{position:absolute;inset:0;z-index:-1;pointer-events:none;overflow:hidden;border-radius:2px;opacity:.8;transition:opacity .35s}
+.particle-field canvas{position:absolute!important;inset:0;width:100%!important;height:100%!important;pointer-events:none}
+.scene-glow{position:absolute;inset:0;z-index:-2;pointer-events:none;background:radial-gradient(ellipse at 85% 45%,#ffe36322,transparent 42%),radial-gradient(ellipse at 12% 30%,#fffef8f0,transparent 52%)}
+.scene-controls{position:absolute;top:22px;right:58px;z-index:4;display:flex;align-items:center;gap:15px;font-size:10px;letter-spacing:.5px}
+.scene-mode{display:flex;align-items:center;gap:7px;color:#6e7b64}.scene-mode>span{height:5px;width:5px;border-radius:50%;background:#7b9b67;box-shadow:0 0 0 3px #cbe4bd50}
+.motion-toggle{border:1px solid #9ca58d;background:#fffef8c9;border-radius:30px;display:flex;align-items:center;gap:7px;font-size:10px;padding:6px 9px;transition:background .2s}.motion-toggle:hover{background:#fff4bd}.toggle-track{width:21px;height:12px;background:#c7dfbb;border:1px solid #6b7b61;border-radius:10px;display:block;position:relative}.toggle-track>span{width:6px;height:6px;border-radius:50%;position:absolute;top:2px;left:11px;background:#485c3b;transition:left .2s}.motion-toggle[aria-pressed=false] .toggle-track>span{left:2px;background:#7a8070}.motion-toggle[aria-pressed=false] .toggle-track{background:#e2e5d9;border-color:#a1a995}
+.scene-orbit{position:absolute;inset:-18px -14px 10px -20px;z-index:-1;pointer-events:none;will-change:transform;transform-origin:50% 50%}.hero-art{isolation:isolate}.orbit-ring{position:absolute;inset:7%;border:1px dashed #8fa88a70;border-radius:50%;transform:rotate(-23deg) scaleX(1.13)}.ring-two{inset:1% 13%;border-style:solid;border-color:#8eb7c638;transform:rotate(30deg) scaleX(1.03)}.orbit-dot{position:absolute;left:11%;top:6%;width:9px;height:9px;border:1.5px solid var(--ink);border-radius:50%;background:var(--yellow);box-shadow:2px 2px 0 #23282020}.orbit-code{position:absolute;font-family:Space Grotesk,monospace;color:#839a78;font-size:18px;font-weight:500}.orbit-code-one{bottom:3%;left:12%;transform:rotate(-15deg)}.orbit-code-two{top:9%;right:5%;font-size:23px;color:#d7b349}
+.playground-bar{grid-column:1/-1;min-width:0;display:flex;align-items:center;justify-content:space-between;gap:20px;position:relative;z-index:3;padding:18px 0 3px;margin-top:5px;border-top:1px dashed #a9b59b;align-self:end}.playground-copy{display:flex;gap:14px;align-items:center;min-width:0}.playground-star{font-size:29px;line-height:1;color:#819668;flex:none}.playground-title{font-size:12px;font-weight:650;letter-spacing:1px;display:block;line-height:1.5}.playground-hint{display:block;font-size:9px;letter-spacing:.8px;color:#828976;line-height:1.6;margin-top:4px}.burst-button{flex:none;display:flex;align-items:center;gap:10px;min-height:40px;padding:9px 13px;background:var(--paper);border:1.5px solid var(--ink);box-shadow:3px 3px 0 var(--ink);border-radius:4px;font-size:11px;font-weight:650;position:relative;transition:box-shadow .2s,background .2s,transform .2s}.burst-button:hover{background:var(--yellow)}.burst-symbol{font-size:20px;line-height:1;transition:transform .45s}.burst-button:hover .burst-symbol,.burst-button.is-bursting .burst-symbol{transform:rotate(120deg)}.burst-button kbd{font-size:11px;color:#87917c;background:#eeeee3;border:1px solid #c7ceba;border-radius:3px;min-width:19px;padding:0 3px;line-height:17px;font-weight:400}.burst-button.is-bursting{background:var(--yellow)}.burst-button:disabled{opacity:.5;box-shadow:1px 1px 0 var(--ink);transform:none}
+.celebration-canvas{position:fixed;inset:0;width:100%;height:100%;z-index:40;pointer-events:none}
+.cursor-halo{position:fixed;top:0;left:0;width:27px;height:27px;border:1px solid #7f9674;background:#ffe36322;border-radius:50%;z-index:45;pointer-events:none;opacity:0;will-change:transform}
+.cursor-halo::before,.cursor-halo::after{content:"";position:absolute;background:#b6a145;width:4px;height:4px;border-radius:50%;top:-3px;left:50%}.cursor-halo::after{top:auto;bottom:-3px;background:#8ca3a2;left:30%}
+html[data-effects=off] .particle-field,html[data-effects=reduced] .particle-field{opacity:0}
+html[data-effects=off] .scene-mode>span{background:#a0a58e;box-shadow:none}
+html[data-effects=off] .scene-orbit,html[data-effects=reduced] .scene-orbit{will-change:auto}
+html[data-effects=off] *,html[data-effects=off] *::before,html[data-effects=off] *::after{animation-play-state:paused!important}
+html[data-effects=off] .rough-annotation path{animation:none!important;stroke-dashoffset:0!important}
+@media(min-width:1450px){.hero{padding-top:103px;padding-bottom:30px}}
+@media(max-width:1100px){.hero{padding-top:83px;padding-bottom:27px}.scene-controls{right:39px;top:22px}.scene-orbit{inset:-12px -8px 13px -12px}}
+@media(max-width:760px){.hero{padding:81px 28px 25px;row-gap:35px}.scene-controls{right:28px;left:28px;top:22px;justify-content:space-between;gap:8px}.scene-mode{font-size:9px;letter-spacing:1px}.motion-toggle{font-size:9px;padding:5px 8px}.particle-field{opacity:.65}.playground-bar{padding:18px 0 2px;margin-top:0;gap:12px;align-items:center}.playground-copy{gap:9px}.playground-star{font-size:23px}.playground-title{font-size:10px;letter-spacing:.2px}.playground-hint{font-size:8px;letter-spacing:.3px;max-width:145px;margin-top:4px}.burst-button{gap:7px;font-size:10px;padding:9px 10px;min-height:38px}.burst-symbol{font-size:18px}.burst-button kbd{display:none}.scene-orbit{inset:-14px -8px 14px -12px}.orbit-code{font-size:15px}.orbit-dot{width:7px;height:7px}.cursor-halo{display:none}}
+@media(max-width:380px){.hero{padding-left:23px;padding-right:23px}.scene-controls{left:23px;right:23px}.playground-copy{gap:7px}.playground-title{font-size:9px}.playground-hint{font-size:8px;max-width:125px}.burst-button{padding:8px 9px;gap:6px}.playground-star{font-size:21px}}
+@media(hover:none),(pointer:coarse){.cursor-halo{display:none}}
+@media(prefers-reduced-motion:reduce){.particle-field,.cursor-halo,.celebration-canvas{display:none}.scene-orbit{will-change:auto}}
+
+/* Clip only the rotating orbital decoration, never the content or stickers. */
+.orbit-viewport{position:absolute;inset:-12px -6px 8px -8px;z-index:-1;overflow:hidden;pointer-events:none}
+@media(max-width:760px){.orbit-viewport{inset:-8px 0 10px 0}}

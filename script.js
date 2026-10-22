@@ -1,5 +1,8 @@
 (() => {
   const motionPreference = window.matchMedia('(prefers-reduced-motion: reduce)');
+  let savedEffects = true;
+  try { savedEffects = localStorage.getItem('diren.effects.v1') !== 'off'; } catch {}
+  document.documentElement.dataset.effects = motionPreference.matches ? 'reduced' : savedEffects ? 'on' : 'off';
   const navLinks = [...document.querySelectorAll('.nav-link')];
   const sections = ['top', 'about', 'interests'].map(id => document.getElementById(id));
   const progress = document.querySelector('.reading-progress > span');
@@ -33,22 +36,23 @@
   const ready = document.fonts ? document.fonts.ready : Promise.resolve();
   const entranceReady = new Promise(resolve => {
     if (!window.gsap || motionPreference.matches) resolve();
-    else gsap.delayedCall(1.5, resolve);
+    else if (document.documentElement.dataset.effects === 'off') resolve();
+    else setTimeout(resolve, 1500);
   });
   Promise.all([ready, entranceReady]).then(() => {
     if (!window.RoughNotation) return;
     const { annotate } = window.RoughNotation;
     const name = annotate(document.querySelector('.name'), {
       type: 'underline', color: '#efca40', strokeWidth: 5, padding: [0, 0, 3, 0],
-      iterations: 2, animationDuration: 900, animate: !motionPreference.matches,
+      iterations: 2, animationDuration: 900, animate: !motionPreference.matches && document.documentElement.dataset.effects !== 'off',
     });
     const highlight = annotate(document.querySelector('.highlight'), {
       type: 'underline', color: '#a3bf8f', strokeWidth: 3, padding: 4,
-      iterations: 1, animationDuration: 750, animate: !motionPreference.matches,
+      iterations: 1, animationDuration: 750, animate: !motionPreference.matches && document.documentElement.dataset.effects !== 'off',
     });
     const ai = annotate(document.querySelector('.ai-annotation'), {
       type: 'circle', color: '#5c7750', strokeWidth: 1.5, padding: 4,
-      iterations: 2, animationDuration: 850, animate: !motionPreference.matches,
+      iterations: 2, animationDuration: 850, animate: !motionPreference.matches && document.documentElement.dataset.effects !== 'off',
     });
     annotations = [name, highlight, ai];
     document.querySelectorAll('.rough-annotation').forEach(svg => svg.setAttribute('aria-hidden', 'true'));
@@ -69,6 +73,7 @@
   if (!window.gsap) return;
   const media = gsap.matchMedia();
   media.add('(prefers-reduced-motion: no-preference)', () => {
+    if (document.documentElement.dataset.effects !== 'off') {
     gsap.from('.hero-copy > *', {
       y: 20, opacity: 0, duration: .8, stagger: .075,
       ease: 'power3.out', clearProps: 'transform,opacity',
@@ -77,6 +82,7 @@
       y: 18, rotation: -2, opacity: 0, duration: 1, delay: .2,
       ease: 'power3.out', clearProps: 'transform,opacity',
     });
+    }
     gsap.to('.code-sticker', { y: -6, rotation: -7, duration: 3.1, repeat: -1, yoyo: true, ease: 'sine.inOut' });
     gsap.to('.terminal-sticker', { y: 5, rotation: 10, duration: 3.6, repeat: -1, yoyo: true, ease: 'sine.inOut' });
     gsap.to('.bolt-sticker', { y: -4, rotation: -8, duration: 2.9, repeat: -1, yoyo: true, ease: 'sine.inOut' });
@@ -88,6 +94,7 @@
     const observer = new IntersectionObserver(entries => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
+          if (document.documentElement.dataset.effects === 'off') { observer.unobserve(entry.target); return; }
           reveals.push(gsap.from(entry.target, {
             y: 25, opacity: 0, duration: .8, ease: 'power3.out', clearProps: 'transform,opacity',
           }));
@@ -111,6 +118,7 @@
     const moveX = gsap.quickTo('.mascot', 'x', { duration: .7, ease: 'power3.out' });
     const moveY = gsap.quickTo('.mascot', 'y', { duration: .7, ease: 'power3.out' });
     function move(event) {
+      if (document.documentElement.dataset.effects !== 'on') return;
       const rect = art.getBoundingClientRect();
       const x = (event.clientX - rect.left) / rect.width - .5;
       const y = (event.clientY - rect.top) / rect.height - .5;
@@ -125,8 +133,12 @@
       art.removeEventListener('pointerleave', reset);
     };
   });
-  motionPreference.addEventListener('change', () => {
+  function refreshAnnotations() {
     annotations.forEach(annotation => annotation.hide());
-    annotations.forEach(annotation => { annotation.animate = !motionPreference.matches; annotation.show(); });
-  });
+    annotations.forEach(annotation => {
+      annotation.animate = !motionPreference.matches && document.documentElement.dataset.effects !== 'off';
+      annotation.show();
+    });
+  }
+  document.addEventListener('diren-effects-change', refreshAnnotations);
 })();

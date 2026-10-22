@@ -11,9 +11,16 @@
   <link rel="stylesheet" href="./style.css">
   <script defer src="./assets/vendor/gsap.min.js"></script>
   <script defer src="./assets/vendor/rough-notation.js"></script>
+  <script defer src="./assets/vendor/ScrollTrigger.min.js"></script>
+  <script defer src="./assets/vendor/ScrambleTextPlugin.min.js"></script>
+  <script defer src="./assets/vendor/tsparticles.slim.bundle.min.js"></script>
+  <script defer src="./assets/vendor/confetti.browser.js"></script>
   <script defer src="./script.js"></script>
+  <script defer src="./effects.js"></script>
 </head>
 <body>
+  <div class="cursor-halo" aria-hidden="true"></div>
+  <canvas class="celebration-canvas" aria-hidden="true"></canvas>
   <div class="reading-progress" aria-hidden="true"><span></span></div>
   <a class="skip-link" href="#main">跳到正文</a>
   <div class="page-frame" id="top">
@@ -25,10 +32,7 @@
           <a class="nav-link" href="#about">关于我</a>
           <a class="nav-link" href="#interests">兴趣</a>
         </div>
-        <a class="nav-cta press" href="#direction"><span class="status-dot"></span>寻找 AI 工作<!-- @license lucide-static v1.61.0 - ISC -->
-<!-- @license lucide-static v1.61.0 - ISC -->
-<!-- @license lucide-static v1.61.0 - ISC -->
-<!-- @license lucide-static v1.61.0 - ISC -->
+        <a data-magnetic class="nav-cta press" href="#direction"><span class="status-dot"></span>寻找 AI 工作<!-- @license lucide-static v1.61.0 - ISC -->
 <svg data-icon="arrow-up-right" aria-hidden="true"   class="lucide lucide-arrow-up-right"
   xmlns="http://www.w3.org/2000/svg"
   width="24"
@@ -42,20 +46,19 @@
 >
   <path d="M7 7h10v10" />
   <path d="M7 17 17 7" />
-</svg>
-
-
-
-</a>
+</svg></a>
       </nav>
     </header>
     <main id="main">
       <section class="hero" aria-labelledby="hero-title">
+        <div id="hero-particles" class="particle-field" aria-hidden="true"></div>
+        <div class="scene-glow" aria-hidden="true"></div>
+        <div class="scene-controls" hidden>
+          <span class="scene-mode"><span></span> 互动模式</span>
+          <button class="motion-toggle" type="button" aria-pressed="true" aria-label="启用互动动效"><span class="toggle-track" aria-hidden="true"><span></span></span><span class="toggle-label">动效开启</span></button>
+        </div>
         <div class="hero-copy">
           <div class="eyebrow"><span class="eyebrow-badge"><!-- @license lucide-static v1.61.0 - ISC -->
-<!-- @license lucide-static v1.61.0 - ISC -->
-<!-- @license lucide-static v1.61.0 - ISC -->
-<!-- @license lucide-static v1.61.0 - ISC -->
 <svg data-icon="graduation-cap" aria-hidden="true"   class="lucide lucide-graduation-cap"
   xmlns="http://www.w3.org/2000/svg"
   width="24"
@@ -70,19 +73,12 @@
   <path d="M21.42 10.922a1 1 0 0 0-.019-1.838L12.83 5.18a2 2 0 0 0-1.66 0L2.6 9.08a1 1 0 0 0 0 1.832l8.57 3.908a2 2 0 0 0 1.66 0z" />
   <path d="M22 10v6" />
   <path d="M6 12.5V16a6 3 0 0 0 12 0v-3.5" />
-</svg>
-
-
-
- USYD · CS</span><span class="eyebrow-note">欢迎来到我的小小宇宙</span></div>
+</svg>USYD · CS</span><span class="eyebrow-note">欢迎来到我的小小宇宙</span></div>
           <p class="greeting">你好呀！<span class="wave" aria-hidden="true">✋</span></p>
-          <h1 id="hero-title">我是 <span class="name">diren shen</span><span class="period">.</span></h1>
+          <h1 id="hero-title">我是 <span class="name" aria-label="diren shen">diren shen</span><span class="period">.</span></h1>
           <p class="hero-intro">在<span class="inline-mark">悉尼大学</span>读计算机科学，<br>想把对 AI 的兴趣，变成下一份工作。<br>也喜欢健身，和向上攀岩。</p>
           <div class="hero-actions">
-            <a class="primary-button press" href="#about">认识一下我 <!-- @license lucide-static v1.61.0 - ISC -->
-<!-- @license lucide-static v1.61.0 - ISC -->
-<!-- @license lucide-static v1.61.0 - ISC -->
-<!-- @license lucide-static v1.61.0 - ISC -->
+            <a data-magnetic class="primary-button press" href="#about">认识一下我 <!-- @license lucide-static v1.61.0 - ISC -->
 <svg data-icon="arrow-up-right" aria-hidden="true"   class="lucide lucide-arrow-up-right"
   xmlns="http://www.w3.org/2000/svg"
   width="24"
@@ -96,18 +92,11 @@
 >
   <path d="M7 7h10v10" />
   <path d="M7 17 17 7" />
-</svg>
-
-
-
-</a>
+</svg></a>
             <div class="tiny-note" aria-hidden="true"><svg viewBox="0 0 65 37"><path d="M61 5C43 32 24 37 6 15m0 0 3 15M6 15l17 3"/></svg><span>很高兴在这里遇见你</span></div>
           </div>
           <div class="quick-links" aria-label="快速探索">
             <a class="square-link press" href="#about" aria-label="了解我的计算机科学学习方向" data-tooltip="计算机科学"><!-- @license lucide-static v1.61.0 - ISC -->
-<!-- @license lucide-static v1.61.0 - ISC -->
-<!-- @license lucide-static v1.61.0 - ISC -->
-<!-- @license lucide-static v1.61.0 - ISC -->
 <svg data-icon="code-xml" aria-hidden="true"   class="lucide lucide-code-xml"
   xmlns="http://www.w3.org/2000/svg"
   width="24"
@@ -122,15 +111,8 @@
   <path d="m18 16 4-4-4-4" />
   <path d="m6 8-4 4 4 4" />
   <path d="m14.5 4-5 16" />
-</svg>
-
-
-
-</a>
+</svg></a>
             <a class="square-link press" href="#direction" aria-label="了解我的 AI 求职方向" data-tooltip="AI 方向"><!-- @license lucide-static v1.61.0 - ISC -->
-<!-- @license lucide-static v1.61.0 - ISC -->
-<!-- @license lucide-static v1.61.0 - ISC -->
-<!-- @license lucide-static v1.61.0 - ISC -->
 <svg data-icon="cpu" aria-hidden="true"   class="lucide lucide-cpu"
   xmlns="http://www.w3.org/2000/svg"
   width="24"
@@ -156,15 +138,8 @@
   <path d="M7 2v2" />
   <rect x="4" y="4" width="16" height="16" rx="2" />
   <rect x="8" y="8" width="8" height="8" rx="1" />
-</svg>
-
-
-
-</a>
+</svg></a>
             <a class="square-link press" href="#interests" aria-label="了解我的健身和攀岩兴趣" data-tooltip="健身与攀岩"><!-- @license lucide-static v1.61.0 - ISC -->
-<!-- @license lucide-static v1.61.0 - ISC -->
-<!-- @license lucide-static v1.61.0 - ISC -->
-<!-- @license lucide-static v1.61.0 - ISC -->
 <svg data-icon="dumbbell" aria-hidden="true"   class="lucide lucide-dumbbell"
   xmlns="http://www.w3.org/2000/svg"
   width="24"
@@ -181,15 +156,12 @@
   <path d="m20.1 3.9 1.4-1.4" />
   <path d="M5.343 21.485a2 2 0 1 0 2.829-2.828l1.767 1.768a2 2 0 1 0 2.829-2.829l-6.364-6.364a2 2 0 1 0-2.829 2.829l1.768 1.767a2 2 0 0 0-2.828 2.829z" />
   <path d="m9.6 14.4 4.8-4.8" />
-</svg>
-
-
-
-</a>
+</svg></a>
             <span class="quick-caption">学习 · 探索 · 生活</span>
           </div>
         </div>
         <div class="hero-art" role="img" aria-label="原创 DS 电脑角色插画，蓝色画框配黄色胶带，周围有代码和运动贴纸">
+          <div class="orbit-viewport" aria-hidden="true"><div class="scene-orbit"><span class="orbit-ring ring-one"></span><span class="orbit-ring ring-two"></span><span class="orbit-dot"></span><span class="orbit-code orbit-code-one">{ }</span><span class="orbit-code orbit-code-two">✦</span></div></div>
           <div class="art-board">
             <div class="board-grid"></div>
             <span class="board-label">HELLO, WORLD_</span>
@@ -224,11 +196,13 @@
           <span class="sticker identity-sticker">CS 学生 / AI 探索中</span>
           <span class="art-footnote" aria-hidden="true">一点代码，一点运动，一点好奇心。</span>
         </div>
+        <div class="playground-bar" hidden>
+          <div class="playground-copy"><span class="playground-star" aria-hidden="true">✦</span><div><span class="playground-title">给好奇心，一点回响。</span><span class="playground-hint">移动鼠标探索粒子，或点击右侧按钮</span></div></div>
+          <button class="burst-button press" data-magnetic type="button"><span class="burst-symbol" aria-hidden="true">✳</span><span>点燃灵感</span><kbd aria-hidden="true">↵</kbd></button>
+          <span class="effect-announcement sr-only" role="status" aria-live="polite"></span>
+        </div>
       </section>
       <div class="tag-strip" aria-label="我的关键词"><span class="strip-label">我的关键词<span aria-hidden="true">↳</span></span><span class="tag blue"><!-- @license lucide-static v1.61.0 - ISC -->
-<!-- @license lucide-static v1.61.0 - ISC -->
-<!-- @license lucide-static v1.61.0 - ISC -->
-<!-- @license lucide-static v1.61.0 - ISC -->
 <svg data-icon="code-xml" aria-hidden="true"   class="lucide lucide-code-xml"
   xmlns="http://www.w3.org/2000/svg"
   width="24"
@@ -243,14 +217,7 @@
   <path d="m18 16 4-4-4-4" />
   <path d="m6 8-4 4 4 4" />
   <path d="m14.5 4-5 16" />
-</svg>
-
-
-
-计算机科学</span><span class="tag yellow"><!-- @license lucide-static v1.61.0 - ISC -->
-<!-- @license lucide-static v1.61.0 - ISC -->
-<!-- @license lucide-static v1.61.0 - ISC -->
-<!-- @license lucide-static v1.61.0 - ISC -->
+</svg>计算机科学</span><span class="tag yellow"><!-- @license lucide-static v1.61.0 - ISC -->
 <svg data-icon="cpu" aria-hidden="true"   class="lucide lucide-cpu"
   xmlns="http://www.w3.org/2000/svg"
   width="24"
@@ -276,14 +243,7 @@
   <path d="M7 2v2" />
   <rect x="4" y="4" width="16" height="16" rx="2" />
   <rect x="8" y="8" width="8" height="8" rx="1" />
-</svg>
-
-
-
-AI 方向</span><span class="tag green"><!-- @license lucide-static v1.61.0 - ISC -->
-<!-- @license lucide-static v1.61.0 - ISC -->
-<!-- @license lucide-static v1.61.0 - ISC -->
-<!-- @license lucide-static v1.61.0 - ISC -->
+</svg>AI 方向</span><span class="tag green"><!-- @license lucide-static v1.61.0 - ISC -->
 <svg data-icon="dumbbell" aria-hidden="true"   class="lucide lucide-dumbbell"
   xmlns="http://www.w3.org/2000/svg"
   width="24"
@@ -300,14 +260,7 @@ AI 方向</span><span class="tag green"><!-- @license lucide-static v1.61.0 - IS
   <path d="m20.1 3.9 1.4-1.4" />
   <path d="M5.343 21.485a2 2 0 1 0 2.829-2.828l1.767 1.768a2 2 0 1 0 2.829-2.829l-6.364-6.364a2 2 0 1 0-2.829 2.829l1.768 1.767a2 2 0 0 0-2.828 2.829z" />
   <path d="m9.6 14.4 4.8-4.8" />
-</svg>
-
-
-
-健身</span><span class="tag pink"><!-- @license lucide-static v1.61.0 - ISC -->
-<!-- @license lucide-static v1.61.0 - ISC -->
-<!-- @license lucide-static v1.61.0 - ISC -->
-<!-- @license lucide-static v1.61.0 - ISC -->
+</svg>健身</span><span class="tag pink"><!-- @license lucide-static v1.61.0 - ISC -->
 <svg data-icon="mountain" aria-hidden="true"   class="lucide lucide-mountain"
   xmlns="http://www.w3.org/2000/svg"
   width="24"
@@ -320,11 +273,7 @@ AI 方向</span><span class="tag green"><!-- @license lucide-static v1.61.0 - IS
   stroke-linejoin="round"
 >
   <path d="m8 3 4 8 5-5 5 15H2L8 3z" />
-</svg>
-
-
-
-攀岩</span><span class="strip-spark" aria-hidden="true">✳</span></div>
+</svg>攀岩</span><span class="strip-spark" aria-hidden="true">✳</span></div>
       <section class="about-section section-block" id="about" aria-labelledby="about-title">
         <div class="section-heading"><span class="section-index">01 / 关于我</span><h2 id="about-title">从代码里探索，<br>也在生活里<span class="highlight">向上。</span></h2><span class="heading-doodle" aria-hidden="true">↗</span></div>
         <div class="about-note reveal"><span class="note-pin" aria-hidden="true"></span><span class="small-label">很高兴认识你</span><p>我是 diren shen，<br>在悉尼大学学习计算机科学。</p><p>我希望找到 AI 方向的工作。<br>学习之外，我喜欢健身和攀岩。</p><span class="signature">diren shen <span aria-hidden="true">☺</span></span></div>
@@ -333,9 +282,6 @@ AI 方向</span><span class="tag green"><!-- @license lucide-static v1.61.0 - IS
         <div class="section-topline"><div><span class="section-index">02 / 我的兴趣</span><h2 id="interests-title">不止于屏幕之内<span class="period">.</span></h2></div><span class="handwritten">生活也要动起来 ↙</span></div>
         <div class="interest-grid">
           <article class="interest-card fitness reveal"><div class="card-top"><span class="mini-tag"><!-- @license lucide-static v1.61.0 - ISC -->
-<!-- @license lucide-static v1.61.0 - ISC -->
-<!-- @license lucide-static v1.61.0 - ISC -->
-<!-- @license lucide-static v1.61.0 - ISC -->
 <svg data-icon="dumbbell" aria-hidden="true"   class="lucide lucide-dumbbell"
   xmlns="http://www.w3.org/2000/svg"
   width="24"
@@ -352,15 +298,8 @@ AI 方向</span><span class="tag green"><!-- @license lucide-static v1.61.0 - IS
   <path d="m20.1 3.9 1.4-1.4" />
   <path d="M5.343 21.485a2 2 0 1 0 2.829-2.828l1.767 1.768a2 2 0 1 0 2.829-2.829l-6.364-6.364a2 2 0 1 0-2.829 2.829l1.768 1.767a2 2 0 0 0-2.828 2.829z" />
   <path d="m9.6 14.4 4.8-4.8" />
-</svg>
-
-
-
-健身</span><span class="card-stamp" aria-hidden="true">✳</span></div><svg class="interest-illustration dumbbell" viewBox="0 0 240 125" aria-hidden="true"><g stroke="#20241f" stroke-width="5" stroke-linejoin="round"><path d="M59 50h123v25H59Z" fill="#fffdf5"/><rect x="41" y="26" width="23" height="74" rx="5" fill="#ffe45c"/><rect x="20" y="39" width="21" height="49" rx="4" fill="#ffe45c"/><rect x="179" y="26" width="23" height="74" rx="5" fill="#ffe45c"/><rect x="202" y="39" width="21" height="49" rx="4" fill="#ffe45c"/><path d="m88 22-7-11m61 9 6-12m-40 95-4 12m62-19 9 9" fill="none" stroke-linecap="round"/></g></svg><h3>喜欢健身。</h3><p>我的课外兴趣之一。</p></article>
+</svg>健身</span><span class="card-stamp" aria-hidden="true">✳</span></div><svg class="interest-illustration dumbbell" viewBox="0 0 240 125" aria-hidden="true"><g stroke="#20241f" stroke-width="5" stroke-linejoin="round"><path d="M59 50h123v25H59Z" fill="#fffdf5"/><rect x="41" y="26" width="23" height="74" rx="5" fill="#ffe45c"/><rect x="20" y="39" width="21" height="49" rx="4" fill="#ffe45c"/><rect x="179" y="26" width="23" height="74" rx="5" fill="#ffe45c"/><rect x="202" y="39" width="21" height="49" rx="4" fill="#ffe45c"/><path d="m88 22-7-11m61 9 6-12m-40 95-4 12m62-19 9 9" fill="none" stroke-linecap="round"/></g></svg><h3>喜欢健身。</h3><p>我的课外兴趣之一。</p></article>
           <article class="interest-card climbing reveal"><div class="card-top"><span class="mini-tag"><!-- @license lucide-static v1.61.0 - ISC -->
-<!-- @license lucide-static v1.61.0 - ISC -->
-<!-- @license lucide-static v1.61.0 - ISC -->
-<!-- @license lucide-static v1.61.0 - ISC -->
 <svg data-icon="mountain" aria-hidden="true"   class="lucide lucide-mountain"
   xmlns="http://www.w3.org/2000/svg"
   width="24"
@@ -373,17 +312,10 @@ AI 方向</span><span class="tag green"><!-- @license lucide-static v1.61.0 - IS
   stroke-linejoin="round"
 >
   <path d="m8 3 4 8 5-5 5 15H2L8 3z" />
-</svg>
-
-
-
-攀岩</span><span class="card-stamp" aria-hidden="true">✦</span></div><svg class="interest-illustration mountain" viewBox="0 0 240 125" aria-hidden="true"><g stroke="#20241f" stroke-width="4.5" stroke-linejoin="round"><path d="m33 108 69-91 72 91Z" fill="#fffdf5"/><path d="m109 108 51-67 54 67Z" fill="#b7d9b6"/><path d="m78 48 23-31 26 33-19-5-10 10-8-10Z" fill="#ffe45c"/><path d="m114 82 11 8-7 9m-21-36 8 8-7 7" fill="none"/><circle cx="186" cy="26" r="13" fill="#ffe45c"/></g></svg><h3>也喜欢攀岩。</h3><p>另一份兴趣，在岩壁之上。</p></article>
+</svg>攀岩</span><span class="card-stamp" aria-hidden="true">✦</span></div><svg class="interest-illustration mountain" viewBox="0 0 240 125" aria-hidden="true"><g stroke="#20241f" stroke-width="4.5" stroke-linejoin="round"><path d="m33 108 69-91 72 91Z" fill="#fffdf5"/><path d="m109 108 51-67 54 67Z" fill="#b7d9b6"/><path d="m78 48 23-31 26 33-19-5-10 10-8-10Z" fill="#ffe45c"/><path d="m114 82 11 8-7 9m-21-36 8 8-7 7" fill="none"/><circle cx="186" cy="26" r="13" fill="#ffe45c"/></g></svg><h3>也喜欢攀岩。</h3><p>另一份兴趣，在岩壁之上。</p></article>
         </div>
       </section>
       <section class="direction-section section-block reveal" id="direction" aria-labelledby="direction-title"><div class="direction-icon" aria-hidden="true">✳</div><div><span class="section-index">下一站 / AI</span><h2 id="direction-title">寻找 <span class="ai-annotation">AI</span> 方向的工作机会。</h2><p>计算机科学在读 · 悉尼大学</p></div><a class="square-link press back-top" href="#top" aria-label="回到顶部"><!-- @license lucide-static v1.61.0 - ISC -->
-<!-- @license lucide-static v1.61.0 - ISC -->
-<!-- @license lucide-static v1.61.0 - ISC -->
-<!-- @license lucide-static v1.61.0 - ISC -->
 <svg data-icon="arrow-up" aria-hidden="true"   class="lucide lucide-arrow-up"
   xmlns="http://www.w3.org/2000/svg"
   width="24"
@@ -397,11 +329,7 @@ AI 方向</span><span class="tag green"><!-- @license lucide-static v1.61.0 - IS
 >
   <path d="m5 12 7-7 7 7" />
   <path d="M12 19V5" />
-</svg>
-
-
-
-</a></section>
+</svg></a></section>
     </main>
     <footer><a href="#top" class="footer-name">diren shen<span>✳</span></a><span>计算机科学 · 健身 · 攀岩</span><a href="#top" class="footer-top">回到顶部 ↑</a></footer>
   </div>

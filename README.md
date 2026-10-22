@@ -56,3 +56,18 @@ npm run build
 - 沿用 GSAP：插画眨眼、贴纸浮动、桌面鼠标视差、分段入场；支持系统减少动态效果。
 - 细化纸张与胶带、卡片、网格、色彩、间距和按钮反馈；加入滚动进度及快捷入口提示。
 - 保留页面内容与 GitHub Pages 发布方式。无需安装依赖即可直接打开；只有重新构建或更新库时需要 npm ci。
+
+## 粒子互动版
+
+新增 [tsParticles Slim](https://github.com/tsparticles/tsparticles) 与 [canvas-confetti](https://github.com/catdad/canvas-confetti)，全部使用本地发行文件并保留许可证。
+
+- 首屏粒子：桌面鼠标靠近时连线响应；手机减少粒子数量并关闭连线。
+- 点击「点燃灵感」触发一次彩纸爆发，按钮支持键盘 Enter / Space。
+- GSAP ScrambleTextPlugin：姓名入场解码和鼠标悬停解码。
+- GSAP ScrollTrigger：插画轨道和手绘箭头随滚动变化。
+- 桌面保留原生鼠标，增加轻量跟随光环与磁吸按钮。
+- 首屏离开视口、页面切入后台时暂停粒子；彩纸按钮设有触发间隔。
+- 动效开关可暂停动画，并在当前浏览器保存选择；系统减少动态效果优先。
+- `effects.js` 单独管理粒子、彩纸和增强动效，无需后端。
+
+构建时运行 `npm ci && npm run build`，`dist/` 仍可直接部署到 GitHub Pages。直接双击根目录 `index.html` 也可浏览，所有效果脚本均使用经典 script 标签和相对路径，不依赖在线 CDN。
