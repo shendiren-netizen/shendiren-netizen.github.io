@@ -1,0 +1,7 @@
+GSAP 3.14.2
+Copyright 2025, GreenSock. All rights reserved.
+Subject to the terms at https://gsap.com/standard-license
+https://gsap.com
+Author: Jack Doyle, jack@greensock.com
+
+The original license notice is preserved in gsap.min.js.
