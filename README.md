@@ -1,6 +1,6 @@
 # diren shen · 个人主页
 
-中文个人主页。参考 marjoballabani.me 的黄色导航、浅色网格、粗黑描边与实心阴影风格；页面、图标和 DS 电脑角色插画为本项目原创实现。使用本地 GSAP 动画库，不依赖 CDN、外部字体或图片服务。
+中文个人主页。参考 marjoballabani.me 的黄色导航、浅色网格、粗黑描边与实心阴影风格；页面、图标和 DS 电脑角色插画为本项目原创实现。使用本地 GSAP 动画库、Rough Notation 手绘标注、Lucide 图标和 Fontsource 字体，不依赖 CDN、在线字体或图片服务。
 
 ## 直接打开
 
@@ -39,7 +39,20 @@ npm run build
 - `index.html`：页面内容、语义结构与 SVG 插画。
 - `style.css`：视觉、交互反馈和手机适配。
 - `script.js`：GSAP 动画和导航状态；支持系统“减少动态效果”设置。
-- `assets/vendor/`：GSAP 本地发行文件及版权信息；版本由 package-lock.json 锁定。
+- `assets/vendor/`：GSAP、Rough Notation 的本地发行文件和许可证，以及 Lucide 许可证。
+- `assets/fonts/`：Space Grotesk 和 Caveat 的本地 WOFF2 字体与许可证，中文使用系统字体。
+- `assets/icons/`：精选 Lucide 图标；页面内联 SVG，双击打开时也可使用。
+- `scripts/vendor.mjs`：同步本地资源和精选 SVG；构建时自动运行，版本由 package-lock.json 锁定。
 - `.github/workflows/deploy.yml`：自动构建与 GitHub Pages 发布。
 
 页面只呈现用户提供的信息；未添加未提供的作品、履历、联系方式或社交链接。无数据收集、后端或表单。
+
+
+## 本次视觉优化
+
+- [Lucide](https://github.com/lucide-icons/lucide)：统一图标的比例、线宽与风格，仅使用精选图标。
+- [Rough Notation](https://github.com/rough-stuff/rough-notation)：姓名和关键文字的手绘下划线、AI 圈注。
+- [Fontsource](https://github.com/fontsource/fontsource)：自托管 Space Grotesk（姓名、标识）和 Caveat（签名），保留字体许可证。
+- 沿用 GSAP：插画眨眼、贴纸浮动、桌面鼠标视差、分段入场；支持系统减少动态效果。
+- 细化纸张与胶带、卡片、网格、色彩、间距和按钮反馈；加入滚动进度及快捷入口提示。
+- 保留页面内容与 GitHub Pages 发布方式。无需安装依赖即可直接打开；只有重新构建或更新库时需要 npm ci。
