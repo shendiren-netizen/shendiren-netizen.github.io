@@ -137,3 +137,58 @@ html[data-effects=off] .ambient-aurora>span{animation-play-state:paused}
 @media(prefers-reduced-motion:reduce){.ambient-aurora>span{animation:none;will-change:auto}.ambient-scene>.particle-field{display:none}.flow-canvas{display:block;opacity:1}}
 
 html{color-scheme:dark;scrollbar-color:#4c6184 #070c1c}
+
+/* Local daytime palette: keep moving trails visible against the white sky. */
+html[data-theme=day]{color-scheme:light;scrollbar-color:#9caec0 #f8fafc}
+html[data-theme=day] body{background:#f8fafc;color:#202b3a}
+html[data-theme=day] .ambient-scene{background:#f8fafc;background-image:radial-gradient(ellipse at 85% 12%,#dcecff66,transparent 55%),radial-gradient(ellipse at 10% 75%,#eee8ff55,transparent 52%)}
+html[data-theme=day] .aurora-gold{background:radial-gradient(ellipse,#ffe5a955,transparent 65%)}
+html[data-theme=day] .aurora-blue{background:radial-gradient(ellipse,#99d7ed55,transparent 65%)}
+html[data-theme=day] .aurora-sage{background:radial-gradient(ellipse,#c5bee955,transparent 66%)}
+html[data-theme=day] .ambient-vignette{background:radial-gradient(ellipse at 52% 42%,transparent 40%,#dce5ee33 100%)}
+html[data-theme=day] .page-frame{background:#ffffff50;border-color:#283343;box-shadow:10px 10px 0 #283343}
+html[data-theme=day] .hero-copy::before{background:radial-gradient(ellipse at 40% 50%,#ffffffcc,transparent 76%)}
+html[data-theme=day] .greeting,html[data-theme=day] h1,html[data-theme=day] h2{color:#202b3a}
+html[data-theme=day] .hero-intro{color:#4c5c70}
+html[data-theme=day] .inline-mark{color:#263b4c;background:linear-gradient(transparent 60%,#c6e4c2 60%)}
+html[data-theme=day] .period{color:#347c9b}
+html[data-theme=day] .eyebrow>.eyebrow-badge{background:#eff5fbe6;border-color:#7e91a6;color:#2f435b}
+html[data-theme=day] .eyebrow>.eyebrow-note{color:#5d6d80}
+html[data-theme=day] .tiny-note,html[data-theme=day] .quick-caption{color:#5c6b7e}
+html[data-theme=day] .tiny-note svg{stroke:#5c6b7e}
+html[data-theme=day] .square-link{background:#fffef9;border-color:#283343;color:#263343;box-shadow:3px 3px 0 #283343}
+html[data-theme=day] .square-link.press:hover{background:#eaf3fb;box-shadow:6px 6px 0 #283343}
+html[data-theme=day] .scene-mode{color:#5e7086}
+html[data-theme=day] .scene-mode>span:not([data-i18n]){background:#56885f;box-shadow:0 0 0 4px #b8d7bb44}
+html[data-theme=day] .motion-toggle{color:#304359;background:#f8fbffe8;border-color:#849bb0}
+html[data-theme=day] .motion-toggle:hover{background:#e8f1fa}
+html[data-theme=day] .toggle-track{background:#c8dfcf;border-color:#658171}
+html[data-theme=day] .toggle-track>span{background:#496c54}
+html[data-theme=day] .motion-toggle[aria-pressed=false] .toggle-track{background:#dce1e8;border-color:#8897a7}
+html[data-theme=day] .art-footnote{color:#586d86}
+html[data-theme=day] .art-board{box-shadow:8px 8px 0 #283343}
+html[data-theme=day] .orbit-ring{border-color:#7697bc66}
+html[data-theme=day] .ring-two{border-color:#7697bc33}
+html[data-theme=day] .orbit-code{color:#6480a0}
+html[data-theme=day] .playground-bar{border-color:#9caec0}
+html[data-theme=day] .playground-star{color:#9a761f}
+html[data-theme=day] .playground-title{color:#34465e}
+html[data-theme=day] .playground-hint{color:#61738b}
+html[data-theme=day] .tag-strip{background:#edf4facc;border-color:#9caec0}
+html[data-theme=day] .strip-label{color:#4e637b}
+html[data-theme=day] .strip-spark{color:#9a761f}
+html[data-theme=day] .section-index{color:#546b87}
+html[data-theme=day] .section-heading h2,html[data-theme=day] .section-topline h2{color:#202b3a}
+html[data-theme=day] .heading-doodle,html[data-theme=day] .handwritten{color:#57718d}
+html[data-theme=day] .highlight{background:linear-gradient(transparent 60%,#ffe45c88 60%)}
+html[data-theme=day] .section-heading::before,html[data-theme=day] .section-topline::before{background:radial-gradient(ellipse at left,#ffffffaa,transparent 80%)}
+html[data-theme=day] footer{background:#edf4facc;border-color:#9caec0}
+html[data-theme=day] footer>span{color:#516880}
+html[data-theme=day] .footer-name{color:#263b51}
+html[data-theme=day] .footer-name>span{color:#9a761f}
+html[data-theme=day] .footer-top{color:#415c77}
+html[data-theme=day] .cursor-halo{border-color:#5e8ab8;background:#609cc412}
+html[data-theme=day] .cursor-halo::before{background:#527cad}
+html[data-theme=day] .cursor-halo::after{background:#b58b29}
+html[data-theme=day] a:focus-visible,html[data-theme=day] button:focus-visible{outline-color:#287090}
+@media(max-width:760px){html[data-theme=day] .page-frame{box-shadow:5px 5px 0 #283343}}

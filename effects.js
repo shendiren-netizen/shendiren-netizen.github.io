@@ -14,6 +14,7 @@
   try { enabled = localStorage.getItem('diren.effects.v1') !== 'off'; } catch {}
   let particles;
   let particlePromise;
+  let slimReady;
   let particleNarrow;
   let lastBurst = 0;
   let burstTimer;
@@ -31,7 +32,10 @@
     if (particles || particlePromise || !active() || !window.tsParticles || !window.loadSlim) return particlePromise;
     root.dataset.particles = 'loading';
     particlePromise = (async () => {
-      await loadSlim(tsParticles);
+      // tsParticles plugins must be registered only once, even when a theme
+      // or breakpoint change rebuilds its canvas.
+      await (slimReady ??= loadSlim(tsParticles));
+      const daytime = root.dataset.theme === 'day';
       particleNarrow = narrow.matches;
       particles = await tsParticles.load({
         id: 'ambient-particles',
@@ -46,11 +50,11 @@
           interactivity: {
             detectsOn: 'window',
             events: { onHover: { enable: finePointer.matches && !particleNarrow, mode: 'grab' }, onClick: { enable: !particleNarrow, mode: 'repulse' } },
-            modes: { grab: { distance: 170, links: { opacity: .55, color: '#9ccaff' } }, repulse: { distance: 150, duration: .65, factor: 50, speed: 1 } },
+            modes: { grab: { distance: 170, links: { opacity: .55, color: daytime ? '#507cb4' : '#9ccaff' } }, repulse: { distance: 150, duration: .65, factor: 50, speed: 1 } },
           },
           particles: {
             number: { value: particleNarrow ? 16 : 46, density: { enable: false }, limit: { value: 140 } },
-            paint: { color: { value: ['#d9eaff', '#9cbfff', '#b5aaff'] }, fill: { enable: true, opacity: .9 }, stroke: { color: { value: '#b0d9ff' }, opacity: .25, width: .35 } },
+            paint: { color: { value: daytime ? ['#477caf', '#7772b5', '#428a98'] : ['#d9eaff', '#9cbfff', '#b5aaff'] }, fill: { enable: true, opacity: .9 }, stroke: { color: { value: daytime ? '#507cb4' : '#b0d9ff' }, opacity: .25, width: .35 } },
             shape: { type: 'circle' },
             opacity: { value: { min: .4, max: .8 } },
             size: { value: { min: .65, max: 1.5 } },
@@ -58,7 +62,7 @@
             move: { enable: true, speed: particleNarrow ? .35 : .55, direction: 'bottom-left', random: false, straight: true, outModes: { default: 'out' } },
             groups: {
               dust: { number: { value: particleNarrow ? 7 : 20 }, size: { value: { min: .6, max: 1.5 } }, opacity: { value: { min: .2, max: .55 } }, links: { enable: false }, move: { speed: .25 } },
-              stars: { number: { value: particleNarrow ? 2 : 5 }, shape: { type: 'circle' }, size: { value: { min: 1.4, max: 2.1 } }, opacity: { value: { min: .5, max: .85 } }, paint: { color: { value: '#e4edff' }, fill: { enable: true } }, links: { enable: false }, move: { speed: .18 } },
+              stars: { number: { value: particleNarrow ? 2 : 5 }, shape: { type: 'circle' }, size: { value: { min: 1.4, max: 2.1 } }, opacity: { value: { min: .5, max: .85 } }, paint: { color: { value: daytime ? '#5677b2' : '#e4edff' }, fill: { enable: true } }, links: { enable: false }, move: { speed: .18 } },
             },
             rotate: { value: { min: 0, max: 360 }, animation: { enable: true, speed: 3, sync: false } },
           },
@@ -144,6 +148,12 @@
   document.addEventListener('visibilitychange', () => {
     if (document.hidden) confetti?.reset();
     syncParticlePlayback();
+  });
+  document.addEventListener('diren-theme-change', async () => {
+    await particlePromise;
+    particles?.destroy();
+    particles = undefined;
+    syncEffects();
   });
 
   burstButton.addEventListener('click', () => {

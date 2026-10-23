@@ -8,7 +8,15 @@
   let width = 1, height = 1, mobile = false;
   let stars = [], meteors = [];
   let running = false, frame, previous = 0, lastFrame = 0, time = 0;
-  const meteorColors = ['184,226,255', '173,175,255', '255,226,167'];
+  let daytime;
+  let meteorColors;
+  let starColors;
+  function syncPalette() {
+    daytime = document.documentElement.dataset.theme === 'day';
+    meteorColors = daytime ? ['42,103,183', '108,76,180', '31,125,143'] : ['184,226,255', '173,175,255', '255,226,167'];
+    starColors = daytime ? ['#426cb0', '#7270b5', '#37818f', '#a27c36'] : ['#f1f5ff', '#b4d4ff', '#bdc0ff', '#ffe7bd'];
+  }
+  syncPalette();
 
   function newMeteor(initial = false, index = 0) {
     const angle = .52 + Math.random() * .18;
@@ -79,12 +87,12 @@
       context.moveTo(tailX, tailY); context.lineTo(meteor.x, meteor.y);
       context.stroke();
       const glow = context.createRadialGradient(meteor.x, meteor.y, 0, meteor.x, meteor.y, 5);
-      glow.addColorStop(0, `rgba(243,249,255,${fade})`);
+      glow.addColorStop(0, `rgba(${daytime ? meteor.color : '243,249,255'},${fade})`);
       glow.addColorStop(.3, `rgba(${meteor.color},${fade * .35})`);
       glow.addColorStop(1, `rgba(${meteor.color},0)`);
       context.fillStyle = glow;
       context.fillRect(meteor.x - 5, meteor.y - 5, 10, 10);
-      context.fillStyle = `rgba(245,250,255,${fade})`;
+      context.fillStyle = `rgba(${daytime ? meteor.color : '245,250,255'},${fade})`;
       context.beginPath();
       context.arc(meteor.x, meteor.y, 1.1, 0, Math.PI * 2);
       context.fill();
@@ -108,7 +116,7 @@
       radius: Math.random() < .08 ? 1.6 + Math.random() * .5 : .35 + Math.random() * 1.05,
       depth: .2 + Math.random() * .8, alpha: .4 + Math.random() * .6,
       pulse: .5 + Math.random() * 1.3, seed: Math.random() * 20,
-      color: ['#f1f5ff', '#b4d4ff', '#bdc0ff', '#ffe7bd'][Math.floor(Math.random() * 4)],
+      color: starColors[Math.floor(Math.random() * starColors.length)],
     }));
     meteors = Array.from({ length: mobile ? 3 : 6 }, (_, index) => newMeteor(true, index));
     document.documentElement.dataset.sky = 'starfield';
@@ -135,6 +143,7 @@
     else render(0, false);
   }
   window.ambientFlow = Object.freeze({ setActive });
+  document.addEventListener('diren-theme-change', () => { syncPalette(); resize(); });
   window.addEventListener('resize', resize, { passive: true });
   document.addEventListener('pointermove', event => {
     if (event.pointerType === 'touch' || !running) return;
