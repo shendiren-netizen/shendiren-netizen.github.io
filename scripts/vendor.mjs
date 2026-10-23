@@ -1,5 +1,7 @@
 import { cp, mkdir, readFile, writeFile } from 'node:fs/promises';
+import { build } from 'esbuild';
 const copies = [
+ ['simplex-noise/LICENSE', 'vendor/SIMPLEX-NOISE-LICENSE.txt'],
  ['gsap/dist/gsap.min.js', 'vendor/gsap.min.js'],
  ['gsap/dist/ScrollTrigger.min.js', 'vendor/ScrollTrigger.min.js'],
  ['gsap/dist/ScrambleTextPlugin.min.js', 'vendor/ScrambleTextPlugin.min.js'],
@@ -29,4 +31,9 @@ for (const name of ['code-xml', 'cpu', 'dumbbell', 'arrow-up-right', 'arrow-up',
  html = html.replaceAll(`<!--icon:${name}-->`, svg);
 }
 await writeFile('index.html', html);
-console.log('Local fonts, annotations and selected Lucide SVGs prepared.');
+await build({
+ entryPoints: ['node_modules/simplex-noise/dist/esm/simplex-noise.js'],
+ bundle: true, format: 'iife', globalName: 'SimplexNoise', minify: true,
+ target: ['es2020'], outfile: 'assets/vendor/simplex-noise.min.js', legalComments: 'inline',
+});
+console.log('Local fonts, particles, noise and selected Lucide SVGs prepared.');

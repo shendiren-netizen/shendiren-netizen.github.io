@@ -141,4 +141,11 @@
     });
   }
   document.addEventListener('diren-effects-change', refreshAnnotations);
+  document.addEventListener('diren-language-change', () => {
+    queueNavigation();
+    requestAnimationFrame(() => {
+      refreshAnnotations();
+      window.ScrollTrigger?.refresh();
+    });
+  });
 })();

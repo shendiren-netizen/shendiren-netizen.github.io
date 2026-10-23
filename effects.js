@@ -1,6 +1,6 @@
 (() => {
   const root = document.documentElement;
-  const hero = document.querySelector('.hero');
+  const t = key => window.siteI18n.t(key);
   const toggle = document.querySelector('.motion-toggle');
   const toggleLabel = toggle.querySelector('.toggle-label');
   const burstButton = document.querySelector('.burst-button');
@@ -15,7 +15,6 @@
   let particles;
   let particlePromise;
   let particleNarrow;
-  let heroVisible = true;
   let lastBurst = 0;
   let burstTimer;
   let nameTween;
@@ -26,7 +25,7 @@
 
   document.querySelector('.scene-controls').hidden = false;
   document.querySelector('.playground-bar').hidden = false;
-  toggle.setAttribute('aria-label', '互动动效');
+  toggle.setAttribute('aria-label', t('motionLabel'));
 
   async function initParticles() {
     if (particles || particlePromise || !active() || !window.tsParticles || !window.loadSlim) return particlePromise;
@@ -35,28 +34,32 @@
       await loadSlim(tsParticles);
       particleNarrow = narrow.matches;
       particles = await tsParticles.load({
-        id: 'hero-particles',
+        id: 'ambient-particles',
         options: {
           autoPlay: false,
           fullScreen: { enable: false },
           detectRetina: false,
           fpsLimit: particleNarrow ? 24 : 45,
           pauseOnBlur: true,
-          pauseOnOutsideViewport: true,
+          pauseOnOutsideViewport: false,
           background: { color: { value: 'transparent' } },
           interactivity: {
             detectsOn: 'window',
-            events: { onHover: { enable: finePointer.matches && !particleNarrow, mode: 'grab' }, onClick: { enable: false } },
-            modes: { grab: { distance: 145, links: { opacity: .55, color: '#819f8e' } } },
+            events: { onHover: { enable: finePointer.matches && !particleNarrow, mode: 'grab' }, onClick: { enable: !particleNarrow, mode: 'repulse' } },
+            modes: { grab: { distance: 170, links: { opacity: .55, color: '#9ccaff' } }, repulse: { distance: 150, duration: .65, factor: 50, speed: 1 } },
           },
           particles: {
-            number: { value: particleNarrow ? 18 : 48, density: { enable: false }, limit: { value: 60 } },
-            paint: { color: { value: ['#e6bc37', '#7fa9b9', '#859a74'] }, fill: { enable: true, opacity: .85 }, stroke: { color: { value: '#677d61' }, opacity: .35, width: .4 } },
-            shape: { type: ['circle', 'square', 'star'] },
-            opacity: { value: { min: .3, max: .7 } },
-            size: { value: { min: 2, max: 4.2 } },
-            links: { enable: !particleNarrow, distance: 125, opacity: .28, width: .7, color: '#7d9d92' },
-            move: { enable: true, speed: particleNarrow ? .35 : .55, direction: 'none', random: false, straight: false, outModes: { default: 'bounce' } },
+            number: { value: particleNarrow ? 16 : 46, density: { enable: false }, limit: { value: 140 } },
+            paint: { color: { value: ['#d9eaff', '#9cbfff', '#b5aaff'] }, fill: { enable: true, opacity: .9 }, stroke: { color: { value: '#b0d9ff' }, opacity: .25, width: .35 } },
+            shape: { type: 'circle' },
+            opacity: { value: { min: .4, max: .8 } },
+            size: { value: { min: .65, max: 1.5 } },
+            links: { enable: false, distance: 175, opacity: .34, width: .7, color: '#7c9cda', triangles: { enable: false, opacity: .025, color: '#8cb8ae' } },
+            move: { enable: true, speed: particleNarrow ? .35 : .55, direction: 'bottom-left', random: false, straight: true, outModes: { default: 'out' } },
+            groups: {
+              dust: { number: { value: particleNarrow ? 7 : 20 }, size: { value: { min: .6, max: 1.5 } }, opacity: { value: { min: .2, max: .55 } }, links: { enable: false }, move: { speed: .25 } },
+              stars: { number: { value: particleNarrow ? 2 : 5 }, shape: { type: 'circle' }, size: { value: { min: 1.4, max: 2.1 } }, opacity: { value: { min: .5, max: .85 } }, paint: { color: { value: '#e4edff' }, fill: { enable: true } }, links: { enable: false }, move: { speed: .18 } },
+            },
             rotate: { value: { min: 0, max: 360 }, animation: { enable: true, speed: 3, sync: false } },
           },
 
@@ -72,8 +75,10 @@
   }
 
   function syncParticlePlayback() {
+    const running = active() && !document.hidden;
+    window.ambientFlow?.setActive(running);
     if (!particles) return;
-    if (active() && heroVisible && !document.hidden) particles.play();
+    if (running) particles.play();
     else particles.pause();
   }
 
@@ -84,14 +89,21 @@
     name.style.width = '';
   }
 
+  function updateLabels() {
+    toggle.setAttribute('aria-label', t('motionLabel'));
+    toggleLabel.textContent = t(reduce.matches ? 'motionSystem' : enabled ? 'motionOn' : 'motionOff');
+    toggle.title = t(reduce.matches ? 'motionReducedTitle' : 'motionTitle');
+    hint.textContent = t(reduce.matches ? 'hintReduced' : !enabled ? 'hintPaused' : narrow.matches ? 'hintMobile' : 'hintDesktop');
+    if (announcement.textContent) announcement.textContent = t('sparked');
+  }
+  document.addEventListener('diren-language-change', updateLabels);
+
   function syncEffects() {
     root.dataset.effects = reduce.matches ? 'reduced' : enabled ? 'on' : 'off';
     toggle.disabled = reduce.matches;
     toggle.setAttribute('aria-pressed', String(active()));
-    toggleLabel.textContent = reduce.matches ? '跟随系统' : enabled ? '动效开启' : '动效关闭';
-    toggle.title = reduce.matches ? '系统已开启“减少动态效果”，本站会自动减弱动画' : '切换粒子与动画';
+    updateLabels();
     burstButton.disabled = !active() || !confetti;
-    hint.textContent = reduce.matches ? '已跟随系统减少动态效果，安心浏览' : !enabled ? '动效已暂停，随时可以重新开启' : narrow.matches ? '轻触「点燃灵感」，收获一点惊喜' : '移动鼠标探索粒子，或点击右侧按钮';
     if (window.gsap) {
       if (active()) {
         gsap.globalTimeline.resume();
@@ -129,11 +141,6 @@
     }
     syncEffects();
   });
-  const heroObserver = new IntersectionObserver(entries => {
-    heroVisible = entries[0].isIntersecting;
-    syncParticlePlayback();
-  }, { threshold: .05 });
-  heroObserver.observe(hero);
   document.addEventListener('visibilitychange', () => {
     if (document.hidden) confetti?.reset();
     syncParticlePlayback();
@@ -152,7 +159,7 @@
       origin: { x: (rect.left + rect.width / 2) / innerWidth, y: (rect.top + rect.height / 2) / innerHeight },
     });
     burstButton.classList.add('is-bursting');
-    announcement.textContent = '灵感已点燃！';
+    announcement.textContent = t('sparked');
     clearTimeout(burstTimer);
     burstTimer = setTimeout(() => {
       burstButton.classList.remove('is-bursting');
