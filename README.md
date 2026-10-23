@@ -32,6 +32,10 @@ npm run build
 3. 打开 **Actions → Deploy to GitHub Pages → Run workflow**，或推送一次提交，等待发布成功。
 4. 发布地址会显示在 Pages 设置页和工作流的 deployment 输出中。
 
+此项目的线上地址为 https://shendiren-netizen.github.io/ 。请统一选择 **GitHub Actions** 作为发布来源，避免分支发布和自定义工作流同时部署。工作流会自动执行 `npm ci` 和 `npm run build`；推送源码后不需要再手动上传 `dist/`。
+
+本地验证可以执行 `npm ci`、`npm run build`、`npm run preview`。`npm ci` 用于按锁文件安装依赖，已有匹配依赖时不必每次重复执行。构建会给 HTML 中的样式、脚本等本地资源添加内容哈希版本号，并同步到 `dist/`，防止更新后混用浏览器缓存中的旧 CSS 或 JS。修改源码后应重新构建再提交。
+
 所有资源均使用相对路径，同时支持 `用户名.github.io` 和 `用户名.github.io/仓库名/`。如果默认分支不是 main，请同步修改 `.github/workflows/deploy.yml` 的分支名。
 
 ## 结构与维护
