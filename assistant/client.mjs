@@ -200,7 +200,7 @@ async function submit() {
       }
       if(event.event==='done'){
         if(!answer.trim()||!Array.isArray(data.sourceIds)||!data.sourceIds.length||data.sourceIds.some(id=>!sources.some(s=>s.id===id)))throw new Error('UNSUPPORTED_SOURCES');
-        renderSources(reply.article,data.sourceIds,lang);complete=true;
+        renderSources(reply.article,data.sourceIds,lang);scrollToEnd();complete=true;
       }
     }
     if(!complete)throw new Error('INCOMPLETE');
