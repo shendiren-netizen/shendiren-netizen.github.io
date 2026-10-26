@@ -1,0 +1,15 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "diren-profile-assistant",
+  "main": "src/index.mjs",
+  "compatibility_date": "2026-10-26",
+  "workers_dev": true,
+  "ai": { "binding": "AI" },
+  "ratelimits": [
+    { "name": "CHAT_RATE_LIMITER", "namespace_id": "74261026", "simple": { "limit": 6, "period": 60 } }
+  ],
+  "vars": {
+    "ALLOWED_ORIGINS": "https://shendiren-netizen.github.io,http://127.0.0.1:5173,http://localhost:5173"
+  },
+  "observability": { "enabled": false }
+}

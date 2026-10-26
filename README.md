@@ -8,7 +8,7 @@
 
 ## 本地预览
 
-需要 Node.js 18 或以上版本。在项目文件夹中运行：
+需要 Node.js 22 或以上版本（推荐 24）。在项目文件夹中运行：
 
 ```sh
 npm run dev
@@ -49,7 +49,7 @@ npm run build
 - `scripts/vendor.mjs`：同步本地资源和精选 SVG；构建时自动运行，版本由 package-lock.json 锁定。
 - `.github/workflows/deploy.yml`：自动构建与 GitHub Pages 发布。
 
-页面只呈现用户提供的信息；未添加未提供的作品、履历、联系方式或社交链接。无数据收集、后端或表单。
+页面只呈现用户提供的信息；未添加未提供的作品、履历、联系方式或社交链接。新增的个人问答助手通过 Cloudflare Workers AI 提供在线回答；聊天只在当前页面会话中保留，应用不建立聊天记录数据库。
 
 
 ## 本次视觉优化
@@ -106,3 +106,52 @@ npm run build
 ## 简历内容更新（2026-10-26）
 
 依据用户提供的简历更新：姓名 DiRen Shen，悉尼大学计算机科学硕士（2026 年 7 月毕业），AI / LLM 应用工程实习方向。新增教育背景、四类技术栈、企业知识库 RAG 系统、医疗 AI 聊天机器人、2D 装修设计与费用估算项目，以及简历中的邮箱、电话、到岗时间、现场工作天数与语言能力。中英文内容同步。项目未提供仓库或演示链接，因此不显示相关按钮。保留既有健身与攀岩兴趣、昼夜配色与动效。
+
+
+## 招聘问答 AI 助手
+
+首页「和我的 AI 聊聊」与右下角按钮打开同一个对话窗口。支持中英文、第一人称个人介绍、带来源依据的回答、流式输出、停止回答、重新开始以及职位描述逐项对照。职位对照列出相关经验、资料尚未体现的要求和建议追问，不计算匹配百分比。
+
+### 本地查看
+
+```sh
+npm ci
+npm run build
+npm run dev
+```
+
+打开 http://127.0.0.1:5173 。在线服务地址在 `assistant/config.json`，只有公开 Worker URL，无 API 密钥。双击 `index.html` 仍可使用明确标注的常见问答模式；由于后端拒绝文件的 null Origin，在线 AI 请使用本地 HTTP 预览或已发布主页。
+
+### 部署免费后端
+
+使用 Cloudflare **Free** 计划，无需创建数据库、向量库或付费资源。免费额度会受到 Cloudflare 的每日限制；使用付费计划可能有超额费用，请保留 Free 计划。首次部署：
+
+```sh
+npm --prefix worker ci
+npm exec --prefix worker -- wrangler login
+npm run assistant:deploy
+```
+
+部署脚本会验证登录、部署 Worker、将生成的真实 `/chat` URL 写入 `assistant/config.json`，然后重新构建前端。随后提交并推送站点文件到 GitHub，Pages 工作流会测试、构建并发布。后续修改知识库后，同样重新运行 `npm run assistant:deploy` 再推送前端，保持前后端资料一致。`npm run assistant:configure -- https://实际部署地址/chat` 可用于手动设置真实端点。
+
+后端允许 `https://shendiren-netizen.github.io`、`http://127.0.0.1:5173`、`http://localhost:5173`。如更换域名，在 `worker/wrangler.jsonc` 中更新 `ALLOWED_ORIGINS` 后重新部署。CORS 只限制浏览器跨域，不是身份认证；接口另设平台原生每来源 IP 的近似限流（每个 Cloudflare 位置 6 次/60 秒），实际免费额度由 Free 计划限制。
+
+### 内容和行为
+
+- `assistant/knowledge.mjs` 是共享的、人工确认的公开资料，前后端使用同一份内容。个人资料很小，直接作为模型上下文；没有假称使用向量检索。
+- `rag-challenges` 仅确认遇到检索不相关、回答缺乏依据并尝试检索调整与引用约束；不编造具体参数、改进分数或彻底解决的结果。
+- 工资、签证、工作权利等未提供信息会引导招聘者直接联系本人。到岗时间标注资料确认日期。
+- FAQ 不调用模型、不模拟生成；未接入后端、网络异常、额度耗尽、回答中断或来源标识无效时会明确进入 FAQ 模式。离线状态不生成职位匹配分析。
+- 问题限 1,000 字符、职位描述限 6,000 字符，每次请求最多携带最近 6 条聊天消息。模型调用有时限、回答长度限制以及取消机制。
+- 不使用聊天 localStorage、sessionStorage、cookie 或数据库，刷新/关闭后不恢复。Cloudflare 会处理在线请求；服务提供商的数据处理例外不等同于应用的聊天持久化。请勿粘贴机密职位资料。应用关闭 Workers Logs，代码不记录问题、职位、回复或 IP 正文。
+- 来源标识校验不等于语义真实性保证。模型仍可能误解资料，重要信息应向本人确认。
+
+### 验证
+
+```sh
+npm test
+npm --prefix worker ci
+npm --prefix worker run build
+```
+
+接口测试使用模拟模型流，覆盖验证、CORS、限流、错误回退、出处、UTF-8 流解析和取消。`worker run build` 为 Wrangler dry-run，不发布，也不消耗模型额度。`npm run assistant:dev` 提供本地接口适配器，没有真实 AI binding 时明确返回不可用，验证 FAQ 回退；结束后运行 `npm run build` 恢复正式端点构建。

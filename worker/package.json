@@ -1,0 +1,12 @@
+{
+  "name": "diren-profile-assistant-api",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "wrangler dev",
+    "build": "wrangler deploy --dry-run --outdir build",
+    "deploy": "wrangler deploy",
+    "whoami": "wrangler whoami"
+  },
+  "devDependencies": { "wrangler": "4.152.0" }
+}
