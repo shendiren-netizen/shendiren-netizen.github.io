@@ -192,3 +192,49 @@ html[data-theme=day] .cursor-halo::before{background:#527cad}
 html[data-theme=day] .cursor-halo::after{background:#b58b29}
 html[data-theme=day] a:focus-visible,html[data-theme=day] button:focus-visible{outline-color:#287090}
 @media(max-width:760px){html[data-theme=day] .page-frame{box-shadow:5px 5px 0 #283343}}
+
+/* Resume sections: quiet surfaces, precise technical detail, familiar paper edges. */
+.resume-section{padding:0 64px 68px;min-width:0;scroll-margin-top:130px}
+.resume-section .section-topline{margin-bottom:26px}
+.resume-section h2{font-size:clamp(24px,2.7vw,34px);line-height:1.35;letter-spacing:-.8px;margin:12px 0 0}
+.education-card,.skill-card,.project-card{min-width:0;border:1.5px solid #20241f;border-radius:4px;box-shadow:5px 5px 0 #02050e;color:#202b3a}
+.education-card{padding:27px 30px;display:flex;gap:24px;align-items:center;background:#d9eaf1}
+.education-symbol{font:44px Space Grotesk,Arial,sans-serif;line-height:1}
+.education-card h3{font:650 21px/1.4 Space Grotesk,"PingFang SC",sans-serif;margin:0 0 8px}
+.education-card p{margin:0;font-size:14px;line-height:1.7}
+.graduation-tag{margin-left:auto;flex-shrink:0;border:1px solid #51637a;background:#fffef9;padding:9px 12px;font:600 11px/1.6 Space Grotesk,"PingFang SC",sans-serif;border-radius:3px}
+.skill-grid,.project-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px}
+.skill-card{position:relative;background:#f5f2e9;padding:27px 28px}
+.skill-card:nth-child(2){background:#e1ebda}.skill-card:nth-child(3){background:#dfeaf3}.skill-card:nth-child(4){background:#ece3ee}
+.skill-number{font:12px/1 Space Grotesk,monospace;color:#657487;display:block;margin-bottom:16px}
+.skill-card h3{font:650 18px/1.4 Space Grotesk,"PingFang SC",sans-serif;margin:0 0 14px}
+.skill-card p{font-size:13px;line-height:2;margin:0;overflow-wrap:anywhere;color:#3a4c60}
+.skill-card small{display:block;font-size:11px;line-height:1.7;color:#56697a;margin-top:10px}
+.project-card{padding:30px;background:#e1ebdf;position:relative}
+.project-card:nth-child(3){background:#e1ebf3}
+.featured-project{grid-column:1/-1;background:#f5f2e9}
+.project-heading{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:24px}
+.project-heading .mini-tag{font-size:10px;line-height:1.5;max-width:80%}
+.project-mark{font:14px/1 Space Grotesk,monospace;white-space:nowrap;color:#506478}
+.project-card h3{font:650 clamp(20px,2.2vw,28px)/1.4 Space Grotesk,"PingFang SC",sans-serif;letter-spacing:-.5px;margin:0 0 15px;overflow-wrap:anywhere}
+.project-summary{font-size:15px;line-height:1.9;color:#4e6071;margin:0 0 22px}
+.tech-tags{display:flex;flex-wrap:wrap;gap:7px;margin:16px 0 20px}
+.tech-tags:empty{display:none}
+.tech-tags>span{font:500 10px/1.5 Space Grotesk,Arial,sans-serif;background:#ffffff99;border:1px solid #849299;border-radius:3px;padding:5px 8px}
+.project-points{padding-left:18px;margin:0;display:grid;gap:13px;font-size:13px;line-height:1.95;color:#3e5060}
+.project-points li{padding-left:4px;overflow-wrap:anywhere}
+.featured-project .project-points{grid-template-columns:repeat(2,minmax(0,1fr));gap:16px 35px}
+.rag-pipeline{list-style:none;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;padding:0;margin:23px 0 25px;counter-reset:flow}
+.rag-pipeline li{counter-increment:flow;position:relative;display:flex;align-items:center;gap:9px;border:1px solid #586b7c;border-radius:3px;background:#e1eaf1;padding:15px 12px;font:600 12px/1.5 Space Grotesk,"PingFang SC",sans-serif}
+.rag-pipeline li::before{content:"0" counter(flow);color:#5b6c7c;font-size:10px;font-weight:400}
+.rag-pipeline li+li::after{content:"→";position:absolute;left:-13px;top:calc(50% - 9px);color:#43586d;font-size:13px}
+.rag-pipeline li:last-child{background:#ffe783}
+.contact-details{grid-column:1/-1;border-top:1px dashed #8e7e3e;padding-top:21px;width:100%;min-width:0}
+.direction-section .contact-details p{font-size:13px;line-height:1.9;margin:0 0 8px;color:#49503d}
+.contact-links{display:flex;gap:12px;flex-wrap:wrap;margin-top:20px}
+.contact-link{display:inline-flex;align-items:center;justify-content:space-between;gap:22px;background:#fffef9;border:1.5px solid #20241f;border-radius:3px;box-shadow:3px 3px 0 #20241f;padding:12px 15px;font:600 13px/1.5 Space Grotesk,Arial,sans-serif;overflow-wrap:anywhere;max-width:100%}
+.contact-link:hover{background:#dcecf4}
+html[data-theme=day] .education-card,html[data-theme=day] .skill-card,html[data-theme=day] .project-card{box-shadow:5px 5px 0 #283343}
+@media(max-width:1100px){.resume-section{padding-left:42px;padding-right:42px}.education-card{flex-wrap:wrap}.graduation-tag{margin-left:0}.rag-pipeline li{padding:12px 8px;font-size:11px}}
+@media(max-width:760px){.resume-section{padding:0 26px 48px;scroll-margin-top:110px}.resume-section h2{font-size:25px;line-height:1.5}.education-card{padding:23px 20px;gap:16px}.education-symbol{font-size:31px}.education-card h3{font-size:19px}.education-card p{font-size:13px}.graduation-tag{font-size:10px}.skill-grid,.project-grid{grid-template-columns:minmax(0,1fr);gap:21px}.skill-card{padding:23px}.skill-card h3{font-size:18px}.skill-card p{font-size:12px;line-height:1.95}.featured-project{grid-column:auto}.project-card{padding:23px 20px}.project-card h3{font-size:23px}.project-summary{font-size:13px}.project-points{font-size:12px;line-height:1.9}.featured-project .project-points{grid-template-columns:minmax(0,1fr);gap:13px}.rag-pipeline{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.rag-pipeline li{padding:12px 8px;font-size:10px}.rag-pipeline li::after{display:none}.direction-section .contact-details p{font-size:12px}.contact-link{font-size:12px;padding:11px 12px;gap:15px}.contact-links{gap:13px}.direction-section>div:not([class]){min-width:0}.direction-section .ai-annotation{white-space:nowrap}.nav-links{gap:12px}}
+@media(prefers-reduced-motion:reduce){.contact-link{transition:none}}

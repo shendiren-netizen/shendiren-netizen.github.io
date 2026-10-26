@@ -4,7 +4,7 @@
   try { savedEffects = localStorage.getItem('diren.effects.v1') !== 'off'; } catch {}
   document.documentElement.dataset.effects = motionPreference.matches ? 'reduced' : savedEffects ? 'on' : 'off';
   const navLinks = [...document.querySelectorAll('.nav-link')];
-  const sections = ['top', 'about', 'interests'].map(id => document.getElementById(id));
+  const sections = ['top', 'about', 'projects'].map(id => document.getElementById(id));
   const progress = document.querySelector('.reading-progress > span');
   let queued = false;
 

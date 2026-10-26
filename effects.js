@@ -89,7 +89,7 @@
   function restoreName() {
     nameTween?.kill();
     const name = document.querySelector('.name');
-    name.textContent = 'diren shen';
+    name.textContent = 'DiRen Shen';
     name.style.width = '';
   }
 
@@ -203,7 +203,7 @@
         name.style.width = `${name.getBoundingClientRect().width}px`;
         nameTween = gsap.to(name, {
           duration: .85,
-          scrambleText: { text: 'diren shen', chars: '01<>/_', revealDelay: .1, speed: .5 },
+          scrambleText: { text: 'DiRen Shen', chars: '01<>/_', revealDelay: .1, speed: .5 },
           onComplete: () => { name.style.width = ''; },
         });
       }
